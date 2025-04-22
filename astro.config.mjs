@@ -13,6 +13,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://aggelos.dev',
   trailingSlash: 'never',
+  prefetch: {
+    prefetchAll: true,
+  },
 
   // Use Netlify adapter if running in Netlify build environment, otherwise use Node.js adapter.
   adapter:
