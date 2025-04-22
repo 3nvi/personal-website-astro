@@ -1,48 +1,64 @@
-# Astro Starter Kit: Basics
+# Personal Website
 
-```sh
-npm create astro@latest -- --template basics
-```
+This is the source code for my personal website, built using [Astro](https://astro.build/).
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Development Setup
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+1.  **Clone the repository:**
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+    ```bash
+    git clone <your-repository-url>
+    cd <repository-directory>
+    ```
 
-## 🚀 Project Structure
+2.  **Install dependencies:**
 
-Inside of your Astro project, you'll see the following folders and files:
+    ```bash
+    npm install
+    ```
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+    _Note: This project uses Node.js. Make sure you have a compatible version installed._
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+3.  **Environment Variables:**
+    Copy the example environment file `.env.local.example` to `.env.local`:
 
-## 🧞 Commands
+    ```bash
+    cp .env.local.example .env.local
+    ```
 
-All commands are run from the root of the project, from a terminal:
+    Then, fill in the required values in `.env.local`. These variables are necessary for features like the contact form and analytics during local development.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+    This command starts the local development server. Open your browser and navigate to `http://localhost:4321` (or the address shown in the terminal) to see the website.
 
-## 👀 Want to learn more?
+## Available Scripts
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The following scripts are available via `npm run <script_name>`:
+
+| Command     | Action                                                      |
+| :---------- | :---------------------------------------------------------- |
+| `dev`       | Starts the local development server                         |
+| `build`     | Builds the production-ready site to the `./dist/` directory |
+| `preview`   | Serves the production build locally for preview             |
+| `astro ...` | Executes Astro CLI commands (e.g., `astro check`)           |
+
+## Running Production Build Locally
+
+To test the production build on your local machine:
+
+1.  **Build the site:**
+
+    ```bash
+    npm run build
+    ```
+
+    This command creates an optimized version of your site in the `./dist/` directory.
+
+2.  **Preview the build:**
+    ```bash
+    npm run preview
+    ```
+    This command starts a local server to serve the files from `./dist/`, allowing you to preview the production site before deployment. Open your browser to the address provided in the terminal.
