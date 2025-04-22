@@ -14,14 +14,6 @@
 	max-age=31536000,
 	immutable'''
 
-[[headers]]
-  for = "/img/*"
-  [headers.values]
-	cache-control = '''
-	public,
-	max-age=86400,
-	stale-while-revalidate=86400'''
-
 [[redirects]]
   from = "https://aggelosarvanitakis.me/*"
   to = "https://aggelos.dev/:splat"
