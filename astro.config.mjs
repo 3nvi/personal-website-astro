@@ -15,7 +15,13 @@ export default defineConfig({
   trailingSlash: 'never',
 
   // Use Netlify adapter if running in Netlify build environment, otherwise use Node.js adapter.
-  adapter: process.env.NETLIFY === 'true' ? netlify() : node({ mode: 'standalone' }),
+  adapter:
+    process.env.NETLIFY === 'true'
+      ? netlify({
+          cacheOnDemandPages: true,
+          imageCDN: false,
+        })
+      : node({ mode: 'standalone' }),
 
   integrations: [
     preact({ compat: true }),
@@ -25,5 +31,9 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+  },
+
+  redirects: {
+    '/blog/old-post': '/blog/new-post',
   },
 });
