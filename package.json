@@ -6,7 +6,6 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro",
     "prepare": "husky"
   },
@@ -19,7 +18,7 @@
   ],
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
-    "astro": "^5.6.1",
+    "astro": "^5.7.4",
     "clsx": "^2.1.1",
     "magic-grid": "^3.4.7",
     "nodemailer": "^6.10.1",
@@ -31,6 +30,7 @@
   "devDependencies": {
     "@astrojs/mdx": "^4.2.3",
     "@astrojs/netlify": "^6.3.0",
+    "@astrojs/node": "^9.2.0",
     "@astrojs/partytown": "^2.1.4",
     "@astrojs/preact": "^3.1.0",
     "@astrojs/rss": "^4.0.11",
