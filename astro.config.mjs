@@ -15,6 +15,7 @@ export default defineConfig({
   trailingSlash: 'never',
   prefetch: {
     prefetchAll: true,
+    defaultStrategy: 'viewport',
   },
 
   // Use Netlify adapter if running in Netlify build environment, otherwise use Node.js adapter.
