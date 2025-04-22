@@ -1,0 +1,114 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Heading from '@/components/Heading';
+import Text from '@/components/Text';
+import { getCollection } from 'astro:content';
+import Project from '@/components/Project.astro';
+import { ImageCarousel } from '@/components/ImageCarousel';
+
+// Get all projects
+const projects = await getCollection('projects');
+// Sort projects by startedAt date
+projects.sort((a, b) => (b.data.startedAt < a.data.startedAt ? -1 : 1));
+
+// Filter projects by type
+const commercialProjects = projects.filter(project => project.filePath?.includes('commercial'));
+const funProjects = projects.filter(project => project.filePath?.includes('fun'));
+
+// Generate JSON+LD for each project
+const projectJsonLd = projects.map(({ data: project }) => ({
+  '@context': 'http://schema.org/',
+  '@type': 'CreativeWork',
+  headline: project.title,
+  about: project.description,
+  url: project.href,
+  thumbnailUrl: project.banner.src,
+  image: project.banner.src,
+  keywords: project.tags.join(','),
+  sameAs: project.githubUrl,
+  creator: {
+    '@type': 'Person',
+    name: 'Aggelos Arvanitakis',
+    url: '/',
+    image: '/img/main.jpg',
+  },
+}));
+
+const imageMap = projects.reduce(
+  (acc, { data: project }) => {
+    acc[project.title] = [project.banner, ...project.screenshots];
+    return acc;
+  },
+  {} as Record<string, ImageMetadata[]>
+);
+---
+
+<Layout
+  title="Projects"
+  description="Browse Aggelos Arvanitakis' freelancing, open source & fun projects"
+>
+  <Fragment slot="head">
+    {
+      projectJsonLd.map(jsonLd => (
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+      ))
+    }
+  </Fragment>
+  <section class="md:my-20">
+    <header class="border-b border-gray-200 py-8">
+      <Heading size="small">Commercial Projects</Heading>
+    </header>
+    <Text>
+      This is a list of projects that I have professionally worked on. The technologies shown in the
+      tags, are not only the ones that this particular project employs, but the ones that I have
+      personally worked with in each product. The list is not exhaustive, but only includes the
+      projects that I'm allowed to disclose.
+    </Text>
+    <ul id="commercial-projects">
+      {
+        commercialProjects.map(({ data: project }) => (
+          <li class="border-gray-200 [&:not(:last-of-type)]:border-b">
+            <Project
+              banner={project.banner}
+              title={project.title}
+              description={project.description}
+              href={project.href}
+              tags={project.tags}
+              screenshotImageUrls={[project.banner.src, ...project.screenshots.map(ss => ss.src)]}
+              githubUrl={project.githubUrl}
+              screenshots={project.screenshots}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+  <section class="md:my-20">
+    <header class="border-b border-gray-200 py-8">
+      <Heading size="small">Open Source & Fun Projects</Heading>
+    </header>
+    <Text>
+      This is a list of projects that I have either open-sourced or developed for fun. At least they
+      were all "fun" in the beginning...
+    </Text>
+    <ul id="fun-projects">
+      {
+        funProjects.map(({ data: project }) => (
+          <li class="border-gray-200 [&:not(:last-of-type)]:border-b">
+            <Project
+              banner={project.banner}
+              title={project.title}
+              description={project.description}
+              href={project.href}
+              tags={project.tags}
+              screenshotImageUrls={[project.banner.src, ...project.screenshots.map(ss => ss.src)]}
+              githubUrl={project.githubUrl}
+              screenshots={project.screenshots}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+  <ImageCarousel client:only="react" imageMap={imageMap} />
+</Layout>

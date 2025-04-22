@@ -1,0 +1,117 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Heading from '@/components/Heading';
+import Text from '@/components/Text';
+import Publication from '@/components/Publication.astro';
+import { getCollection } from 'astro:content';
+import { Masonry } from '@/components/Masonry';
+
+const ARTICLES_SECTION_ID = 'articles';
+const PODCASTS_SECTION_ID = 'podcasts';
+
+// Get all publications
+const publications = await getCollection('publications');
+// Sort by publication date (newest first)
+publications.sort((a, b) => (b.data.createdAt < a.data.createdAt ? -1 : 1));
+
+const articles = publications.filter(publication => publication.filePath?.includes('articles'));
+const podcasts = publications.filter(publication => publication.filePath?.includes('podcasts'));
+
+// Generate JSON+LD for all publications
+const publicationJsonLd = publications.map((publication: (typeof publications)[number]) => {
+  const creationDateToIso = publication.data.createdAt.replace(/\//, '-');
+  return {
+    '@context': 'http://schema.org/',
+    '@type': 'Article',
+    articleBody: publication.data.description,
+    articleSection: 'Web development',
+    headline: publication.data.title,
+    dateCreated: creationDateToIso,
+    dateModified: creationDateToIso,
+    datePublished: creationDateToIso,
+    url: publication.data.href,
+    timeRequired: `PT${publication.data.timeInMinutes}M`,
+    thumbnailUrl: publication.data.banner.src,
+    image: publication.data.banner.src,
+    publisher: {
+      '@type': 'Organization',
+      name: publication.data.publisher,
+      logo: '/img/logo.png',
+    },
+    author: {
+      '@type': 'Person',
+      name: 'Aggelos Arvanitakis',
+      url: '/',
+      image: '/img/main.jpg',
+    },
+  };
+});
+---
+
+<Layout
+  title="Publications"
+  description="Browse Aggelos Arvanitakis' articles, podcasts & publications"
+>
+  <Fragment slot="head">
+    {
+      publicationJsonLd.map(jsonLd => (
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+      ))
+    }
+  </Fragment>
+  <section class="md:my-20">
+    <header class="border-b border-gray-200 py-8">
+      <Heading size="small">Articles</Heading>
+    </header>
+    <Text>
+      This is a list of the articles that I've posted over the years. Since early 2019, I have been
+      trying to post a new article every 10 days, but as you know, sometimes other things take
+      precedence (which is a subtle way of saying that I'm lazy). I tend to write from personal
+      experience, both from the mistakes of the past and the things I've learned while working in
+      multiple projects.
+    </Text>
+    <ul class="flex flex-wrap" id={ARTICLES_SECTION_ID}>
+      {
+        articles.map(({ data: publication }) => (
+          <li>
+            <Publication
+              title={publication.title}
+              createdAt={publication.createdAt}
+              description={publication.description}
+              timeInMinutes={publication.timeInMinutes}
+              href={publication.href}
+              image={publication.banner}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+  <section class="md:my-20">
+    <header class="border-b border-gray-200 py-8">
+      <Heading size="small">Podcasts</Heading>
+    </header>
+    <Text>
+      This is a list of the podcasts that I've recently started working on. I know it's not a list
+      if it's only one, but more is coming. The main topics I tend to discuss about are tips for
+      large scale projects using React & Redux.
+    </Text>
+    <ul class="flex flex-wrap" id={PODCASTS_SECTION_ID}>
+      {
+        podcasts.map(({ data: publication }) => (
+          <li>
+            <Publication
+              title={publication.title}
+              createdAt={publication.createdAt}
+              description={publication.description}
+              timeInMinutes={publication.timeInMinutes}
+              href={publication.href}
+              image={publication.banner}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+  <Masonry client:only="react" selectors={[`#${ARTICLES_SECTION_ID}`, `#${PODCASTS_SECTION_ID}`]} />
+</Layout>

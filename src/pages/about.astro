@@ -1,0 +1,40 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { BorderedHeading } from '@/components/Heading';
+import Text from '@/components/Text';
+import Button from '@/components/Button';
+import HeroImage from '@/content/about/hero.png';
+import { getImage } from 'astro:assets';
+import { Content } from '@/content/about/bio.mdx';
+
+const heroImage = await getImage({ src: HeroImage, format: 'webp', width: 400 });
+---
+
+<Layout title="About">
+  <div class="mx-auto flex flex-grow px-4 md:max-lg:m-0">
+    <div class="flex items-center justify-center gap-16">
+      <div>
+        <section class="max-w-[500px]">
+          <Content
+            components={{
+              h1: BorderedHeading,
+              p: Text,
+            }}
+          />
+        </section>
+        <a href="/publications">
+          <Button tabIndex={-1}>Still interested?!</Button>
+        </a>
+      </div>
+      <div class="max-md:hidden md:max-lg:absolute md:max-lg:right-0 md:max-lg:translate-x-[55%]">
+        <img
+          src={heroImage.src}
+          srcset={heroImage.srcSet.attribute}
+          alt="Grayscale Portrait in Morocco"
+          width={400}
+          height="100%"
+        />
+      </div>
+    </div>
+  </div>
+</Layout>

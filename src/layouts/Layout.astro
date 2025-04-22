@@ -1,0 +1,146 @@
+---
+import NavHeader from '@/components/NavHeader';
+import { twitterHandle, githubHandle, linkedinHandle, mediumHandle } from '@/utils/constants';
+import TwitterSVG from '@/assets/twitter.svg';
+import MediumSVG from '@/assets/medium.svg';
+import GithubSVG from '@/assets/github.svg';
+import LinkedinSVG from '@/assets/linkedin.svg';
+import Logo from '@/assets/logo.png';
+import { getImage } from 'astro:assets';
+
+import '@/styles/main.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Front end engineer aiming to continuously expand his knowledge by collaborating, learning & teaching. I know & teach React, Svelte, Redux, Apollo, Webperf',
+} = Astro.props;
+
+const logo = await getImage({
+  src: Logo,
+  width: 30,
+  height: 30,
+  densities: [1, 2],
+  format: 'webp',
+  quality: 'high',
+});
+
+const gaTrackingId = import.meta.env.PUBLIC_GA_TRACKING_ID;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} | Aggelos Arvanitakis</title>
+    <meta name="description" content={description} />
+    <link
+      href="/fonts/Futura-Book.woff2"
+      as="font"
+      type="font/woff2"
+      rel="preload"
+      crossorigin="anonymous"
+    />
+    <link
+      href="/fonts/Futura-Bold.woff2"
+      as="font"
+      type="font/woff2"
+      rel="preload"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Playfair+Display:700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Aggelos Arvanitakis RSS Feed"
+      href={new URL('rss.xml', Astro.site)}
+    />
+    <slot name="head" />
+    <script
+      is:inline
+      type="text/partytown"
+      src={`https://www.googletagmanager.com/gtag/js?id=G-${gaTrackingId}`}></script>
+
+    <script is:inline type="text/partytown">
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', `G-${gaTrackingId}`);
+    </script>
+  </head>
+  <body>
+    <div class="container flex min-h-screen flex-col p-5 text-gray-700">
+      <NavHeader
+        client:load
+        logo={{ src: logo.src, srcSet: logo.srcSet.attribute }}
+        currentUrl={Astro.url.pathname}
+      />
+      <main class="flex flex-grow flex-col"><slot /></main>
+      <footer class="relative">
+        <address class="flex justify-center">
+          <a
+            href={`https://twitter.com/${twitterHandle}`}
+            title="Twitter"
+            aria-label="Twitter"
+            class="p-2.5"
+          >
+            <div
+              class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-400 transition-colors hover:translate-y-[-4px] hover:bg-gray-700"
+            >
+              <TwitterSVG class="h-3 w-3 fill-white" />
+            </div>
+          </a>
+          <a
+            href={`https://medium.com/@${mediumHandle}`}
+            title="Medium"
+            aria-label="Medium"
+            class="p-2.5"
+          >
+            <div
+              class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-400 transition-colors hover:translate-y-[-4px] hover:bg-gray-700"
+            >
+              <MediumSVG class="h-3 w-3 fill-white" />
+            </div>
+          </a>
+          <a
+            href={`https://github.com/${githubHandle}`}
+            title="Github"
+            aria-label="Github"
+            class="p-2.5"
+          >
+            <div
+              class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-400 transition-colors hover:translate-y-[-4px] hover:bg-gray-700"
+            >
+              <GithubSVG class="h-3 w-3 fill-white" />
+            </div>
+          </a>
+          <a
+            href={`https://linkedin.com/in/${linkedinHandle}`}
+            title="Linkedin"
+            aria-label="Linkedin"
+            class="p-2.5"
+          >
+            <div
+              class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-400 transition-colors hover:translate-y-[-4px] hover:bg-gray-700"
+            >
+              <LinkedinSVG class="h-3 w-3 fill-white" />
+            </div>
+          </a>
+        </address>
+        <p class="absolute right-0 bottom-4 hidden lg:block">© Aggelos Arvanitakis</p>
+      </footer>
+    </div>
+  </body>
+</html>

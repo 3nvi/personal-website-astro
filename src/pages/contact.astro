@@ -1,0 +1,21 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Text from '@/components/Text';
+import Heading from '@/components/Heading';
+import ContactForm from '@/components/ContactForm';
+---
+
+<Layout title="Contact">
+  <div class="mx-auto flex max-w-xl flex-grow flex-col justify-center">
+    <Heading size="small">Get in touch</Heading>
+    <Text>
+      If you want to get in touch with me after all you've seen, then please fill this form and I'll
+      get back to you within a few hours. Alternatively, feel free to email me directly at{' '}
+      <a class="text-blue-600" href="mailto:contact@aggelosarvanitakis.me">
+        contact@aggelosarvanitakis.me
+      </a>
+      .
+    </Text>
+    <ContactForm client:load />
+  </div>
+</Layout>

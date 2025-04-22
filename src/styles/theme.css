@@ -1,0 +1,37 @@
+@theme {
+  /* Custom colors from your tailwind config */
+  --color-primary: #6a61c7;
+  --color-accent: #cc26e8;
+
+  /* Gray scale */
+  --color-gray-50: #f9f9f9;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #eeeeee;
+  --color-gray-300: #b3b3b3;
+  --color-gray-400: #8b8b8b;
+  --color-gray-500: #6b6b6b;
+  --color-gray-600: #4a4a4a;
+  --color-gray-700: #28313b;
+  --color-gray-800: #1a1f25;
+  --color-gray-900: #0d1013;
+
+  /* Custom font families */
+  --font-family-futura: 'FuturaNew', sans-serif;
+  --font-family-playfair: 'Playfair Display', 'FuturaNew', sans-serif;
+
+  /* Custom screen breakpoints */
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1200px;
+  --breakpoint-xl: 1600px;
+
+  /* Default colors that should be included */
+  --color-black: #000;
+  --color-white: #fff;
+
+  /* Using Tailwind's defaults for other theme variables */
+  --spacing: 0.25rem;
+}
+
+@utility container {
+  margin-inline: auto;
+}

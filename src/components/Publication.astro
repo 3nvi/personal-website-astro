@@ -1,0 +1,42 @@
+---
+import Text from './Text';
+import { Image } from 'astro:assets';
+
+interface Props {
+  href: string;
+  title: string;
+  createdAt: string;
+  image: ImageMetadata;
+  timeInMinutes: number;
+  description: string;
+}
+
+const { href, title, createdAt, timeInMinutes, description, image } = Astro.props;
+
+// Format date: "MMM DD, YYYY"
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: '2-digit',
+    year: 'numeric',
+  });
+};
+---
+
+<article class="box-border w-[550px] rounded-sm border border-gray-200 p-5 max-md:w-full">
+  <a href={href} target="_blank" rel="noopener noreferrer" class="group">
+    <Image src={image} alt={`Image for ${title}`} width={550} />
+    <h2 class="my-3 text-xl leading-6 font-bold text-gray-700 group-hover:underline">
+      {title}
+    </h2>
+  </a>
+
+  <div class="flex items-center text-sm">
+    <time>{formatDate(createdAt)}</time>
+    <span class="mx-2 h-[3px] w-[3px] rounded-full bg-gray-700"></span>
+    <span>{timeInMinutes} min read</span>
+  </div>
+
+  <Text>{description}</Text>
+</article>
