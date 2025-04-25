@@ -7,6 +7,7 @@ import GithubSVG from '@/assets/github.svg';
 import LinkedinSVG from '@/assets/linkedin.svg';
 import Logo from '@/assets/logo.png';
 import { getImage } from 'astro:assets';
+import { ClientRouter } from 'astro:transitions';
 
 import '@/styles/main.css';
 
@@ -79,6 +80,7 @@ const gaTrackingId = import.meta.env.PUBLIC_GA_TRACKING_ID;
       gtag('js', new Date());
       gtag('config', `G-${gaTrackingId}`);
     </script>
+    <ClientRouter />
   </head>
   <body>
     <div class="container flex min-h-screen flex-col p-5 text-gray-700">
