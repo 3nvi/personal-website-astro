@@ -16,8 +16,8 @@
   --color-gray-900: #0d1013;
 
   /* Custom font families */
-  --font-family-futura: 'FuturaNew', sans-serif;
-  --font-family-playfair: 'Playfair Display', 'FuturaNew', sans-serif;
+  --font-futura: 'FuturaNew', sans-serif;
+  --font-playfair: 'Playfair Display', 'FuturaNew', sans-serif;
 
   /* Custom screen breakpoints */
   --breakpoint-*: initial;
