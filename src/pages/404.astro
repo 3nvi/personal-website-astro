@@ -1,28 +1,27 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Heading from '@/components/Heading';
-import HeroImage from '@/content/404/hero.jpg';
-import { getImage, Picture } from 'astro:assets';
-
-const heroImage = await getImage({ src: HeroImage });
+import heroImage from '@/content/404/hero.jpg';
+import { Image } from 'astro:assets';
 ---
 
 <Layout title="About">
   <div class="flex flex-grow items-center justify-evenly">
-    <header class="max-lg:py-8d border-gray-700 max-lg:border-y-8">
+    <header class="max-lg:py-8d">
       <Heading>
         404 <br /> Not found
       </Heading>
     </header>
-    <div class="flex-shrink-0 max-lg:hidden">
-      <Picture
-        src={heroImage.src}
+    <div
+      class="h-[550px] w-[550px] flex-shrink-0 overflow-hidden rounded-full object-cover max-lg:hidden"
+    >
+      <Image
+        src={heroImage}
         alt="Not Found"
         loading="eager"
-        width={550}
-        height={550}
-        formats={['avif', 'webp']}
-        quality="high"
+        width={700}
+        height={700}
+        class="-translate-y-[80px]"
       />
     </div>
   </div>
