@@ -15,8 +15,8 @@ export const server = {
         // Create a transporter
         const transporter = nodemailer.createTransport({
           host: import.meta.env.SMTP_HOST,
-          port: 465,
-          secure: true,
+          port: 587,
+          secure: false,
           auth: {
             user: import.meta.env.CONTACT_EMAIL,
             pass: import.meta.env.CONTACT_PASSWORD,
@@ -25,7 +25,7 @@ export const server = {
 
         // Send the email
         await transporter.sendMail({
-          from: import.meta.env.CONTACT_EMAIL,
+          from: import.meta.env.ALIAS_EMAIL || import.meta.env.CONTACT_EMAIL,
           to: import.meta.env.DESTINATION_EMAIL,
           subject: `${input.subject} [${input.email}]`,
           text: input.body,
